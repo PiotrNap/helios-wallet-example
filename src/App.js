@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { Cip30Wallet as Wallet } from "@helios-lang/tx-utils"
+import logo from "./logo.svg"
+import "./App.css"
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <p>Helios Wallet Connect Demo</p>
+        <button
+          onClick={async () => {
+            try {
+              const handle = await window.cardano.nami.enable()
+              const wallet = new Wallet(handle)
+
+              // This line throws an error
+              await wallet.utxos
+              // ----------
+
+              alert("Check console output for error message")
+            } catch (e) {
+              console.error(e)
+            }
+          }}
         >
-          Learn React
-        </a>
+          Connect & Fetch UTxOs
+        </button>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
